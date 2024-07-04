@@ -49,7 +49,7 @@
     <div class="container mt-5">
         <div class="row mb-4">
             <div class="col-12 text-center">
-                <h2>DIVINE ICE'S CREAM</h2>
+                <h2>DIVINE'S ICE CREAM</h2>
                 <hr />
             </div>
         </div>
@@ -57,7 +57,7 @@
             <div class="col-md-4 text-center d-flex">
                 <div class="card w-100">
                     <div class="card-body">
-                        <h5 class="card-title">Chocolate.jpg</h5>
+                        <h5 class="card-title">Chocolate</h5>
                         <img src="Chocolate.jpg" style="width:400px;height:500px;" class="img-thumbnail"/><br>
                         <p class="card-text">Price: ₱150.00</p>
                         <input type="number" class="form-control" id="qty1" placeholder="Enter quantity" oninput="updateOrder()"/>
@@ -78,7 +78,7 @@
                 <div class="card w-100">
                     <div class="card-body">
                         <h5 class="card-title">Rocky Road</h5>
-                       <img src="Rocky Road.jpg" style="width:400px;height:500px;" class="img-thumbnail"/><br>
+                        <img src="Rocky Road.jpg" style="width:400px;height:500px;" class="img-thumbnail"/><br>
                         <p class="card-text">Price: ₱250.00</p>
                         <input type="number" class="form-control" id="qty3" placeholder="Enter quantity" oninput="updateOrder()"/>
                     </div>
@@ -132,6 +132,41 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+        function updateOrder() {
+            const prices = [150, 200, 250, 270, 170, 270];
+            const quantities = [
+                document.getElementById('qty1').value,
+                document.getElementById('qty2').value,
+                document.getElementById('qty3').value,
+                document.getElementById('qty4').value,
+                document.getElementById('qty5').value,
+                document.getElementById('qty6').value
+            ];
+            
+            let orderDetails = '';
+            let total = 0;
+
+            quantities.forEach((quantity, index) => {
+                if (quantity > 0) {
+                    let itemTotal = quantity * prices[index];
+                    orderDetails += `Item ${index + 1}: ₱${prices[index]} x ${quantity} = ₱${itemTotal}\n`;
+                    total += itemTotal;
+                }
+            });
+
+            document.getElementById('carts').value = orderDetails;
+            document.getElementById('total').value = `Total: ₱${total}`;
+            calculateChange();
+        }
+
+        function calculateChange() {
+            const total = parseFloat(document.getElementById('total').value.replace('Total: ₱', '')) || 0;
+            const cash = parseFloat(document.getElementById('cash').value) || 0;
+            const change = cash - total;
+
+            document.getElementById('change').value = `Change: ₱${change >= 0 ? change : 0}`;
+        }
+    </script>
 </body>
-    </html>
+</html>
